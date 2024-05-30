@@ -18,7 +18,14 @@ cd ..
 
 firebase experiments:enable webframeworks
 
-firebase deploy \
-    -m "${GITHUB_REF} (${GITHUB_SHA})" \
-    --project ${FIREBASE_PROJECT} \
-    ${FUNCTIONS_ONLY:+--only functions}
+if [ -n "${FUNCTIONS_SEGMENT}" ]; then
+    firebase deploy \
+        -m "${GITHUB_REF} (${GITHUB_SHA})" \
+        --project ${FIREBASE_PROJECT} \
+        --only functions:${FUNCTIONS_SEGMENT}
+else
+    firebase deploy \
+        -m "${GITHUB_REF} (${GITHUB_SHA})" \
+        --project ${FIREBASE_PROJECT} \
+        ${FUNCTIONS_ONLY:+--only functions}
+fi
