@@ -19,11 +19,13 @@ cd ..
 firebase experiments:enable webframeworks
 
 if [ -n "${FUNCTIONS_SEGMENT}" ]; then
+    echo "Deploying functions in segment: ${FUNCTIONS_SEGMENT}" 
     firebase deploy \
         -m "${GITHUB_REF} (${GITHUB_SHA})" \
         --project ${FIREBASE_PROJECT} \
         --only functions:${FUNCTIONS_SEGMENT}
 else
+    echo "Deploying all functions"
     firebase deploy \
         -m "${GITHUB_REF} (${GITHUB_SHA})" \
         --project ${FIREBASE_PROJECT} \
